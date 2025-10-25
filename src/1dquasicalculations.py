@@ -179,4 +179,99 @@ def throat_area(mass_flow_rate, stagp, stagt, gamma):
     term2 = ((2 / (gamma + 1)) ** ((gamma + 1) / (2 * (gamma - 1))))
     throata = term1 / term2 
     return throata
+"""
+Normal Shock Relations
+"""
 
+def normal_shock_pressure_ratio(gamma, mach1):
+    """
+    Calculate the pressure ratio across a normal shock.
+
+    Parameters:
+    gamma : float
+        Specific heat ratio of the gas.
+    mach1 : float
+        Mach number before the shock.
+
+    Returns:
+    float
+        Pressure ratio (P2/P1).
+    """
+    pratio = 1 + (2 * gamma / (gamma + 1)) * (mach1 ** 2 - 1)
+    return pratio
+def normal_shock_mach2(gamma, mach1):
+    """
+    Calculate the Mach number after a normal shock.
+    Parameters:
+    gamma : float
+        Specific heat ratio of the gas.
+    mach1 : float
+        Mach number before the shock.
+    Returns:
+    float
+        Mach number after the shock.
+    """
+    mach2 = ((1 + ((gamma - 1) / 2) * mach1 ** 2) / (gamma * mach1 ** 2 - (gamma - 1) / 2)) ** 0.5
+    return mach2
+
+def normal_shock_mach1(gamma, mach2):
+    """
+    Calculate the Mach number before a normal shock.
+    Parameters:
+    gamma : float
+        Specific heat ratio of the gas.
+    mach2 : float
+        Mach number after the shock.
+    Returns:
+    float
+        Mach number before the shock.
+    """
+    mach1 = (( (gamma - 1) * mach2 ** 2 + 2) / (2 * gamma * mach2 ** 2 - (gamma - 1))) ** 0.5
+    return mach1
+
+def normal_shock_density_ratio(gamma, mach1):
+    """
+    Calculate the density ratio across a normal shock.
+
+    Parameters:
+    gamma : float
+        Specific heat ratio of the gas.
+    mach1 : float
+        Mach number before the shock.
+
+    Returns:
+    float
+        Density ratio (rho2/rho1).
+    """
+    dratio = ((gamma + 1) * mach1 ** 2) / ((gamma - 1) * mach1 ** 2 + 2)
+    return dratio
+def normal_shock_temperature_ratio(gamma, mach1):
+    """
+    Calculate the temperature ratio across a normal shock.
+    Parameters:
+    gamma : float
+        Specific heat ratio of the gas.
+    mach1 : float
+    Mach number before the shock.
+    Returns:
+    float
+        Temperature ratio (T2/T1).
+    """
+    tratio = normal_shock_pressure_ratio(gamma, mach1) / normal_shock_density_ratio(gamma, mach1)
+    return tratio
+def normal_shock_pressure_ratio(gamma, mach1):
+    """
+    Calculate the pressure ratio across a normal shock.
+
+    Parameters:
+    gamma : float
+        Specific heat ratio of the gas.
+    mach1 : float
+        Mach number before the shock.
+
+    Returns:
+    float
+        Pressure ratio (P2/P1).
+    """
+    pratio = 1 + (2 * gamma / (gamma + 1)) * (mach1 ** 2 - 1)
+    return pratio
