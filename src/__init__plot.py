@@ -1,7 +1,9 @@
-import matplotlib as plt
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-import calculations as calc
+import onedquasicalculations as calc
 import math
+import nozzlecalculations as nozzle
 
 
 
@@ -61,8 +63,16 @@ def plot_nozzle_cross_section(ax, x, y, z, color='b', alpha=0.5):
         Transparency level of the cross-section (default is 0.5).
     """
 
-    ax.plot_trisurf(x, y, z, color=color, alpha=alpha)
+    if x.ndim == 2 and y.ndim == 2 and z.ndim == 2:
+        # Structured grid → smooth surface
+        ax.plot_surface(x, y, z, color=color, alpha=alpha, linewidth=0, antialiased=True)
+    else:
+        # Unstructured or 1D → triangulated surface
+        ax.plot_trisurf(np.ravel(x), np.ravel(y), np.ravel(z),
+                        color=color, alpha=alpha, linewidth=0)
 
-
-
+X, Y, Z = nozzle.nozzle_to_cartesian(rt=1, rc=10, re=1, l_converging=2.5, l_diverging=0.25)
+fig, ax = init_3d_plot_grid('X-axis', 'Y-axis', 'Z-axis', 'Nozzle Cross-Section')
+plot_nozzle_cross_section(ax, X, Y, Z)
+plt.show()
     
